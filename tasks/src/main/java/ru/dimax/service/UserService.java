@@ -3,6 +3,7 @@ package ru.dimax.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
 import ru.dimax.mapper.UserMapper;
 import ru.dimax.mapper.UserUpdateMapper;
@@ -11,9 +12,10 @@ import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ru.dimax.mapper.UserMapper.*;
-
+import static ru.dimax.mapper.TaskMapper.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -38,7 +40,7 @@ public class UserService {
         UserUpdateMapper.INSTANCE.updateUserFromDto(request, user);
 
         User userUPD = userRepository.save(user);
-        log.info("User with id '%s' updated", user.getId());
+        log.info("User with id {} updated", user.getId());
         return UserMapper.modelToDto(userUPD);
     }
 
@@ -47,14 +49,21 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
 
         userRepository.deleteById(userId);
+        log.info("User with id {} deleted", userId);
     }
 
-    public List<UserDto> getAllCurrentUserTasks(Integer userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+    public List<UserDto> getAllUsersExecutingTask(Integer taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException(String.format("Task %d not found", taskId)));
 
-        List<Task> tasks = taskRepository.findTasksByUserId(userId);
+        List<User> users = userRepository.getUsersExecutingTask(taskId);
+        log.info("Requested all users executing task with id {}", taskId);
 
+        return users.stream()
+                .map(u -> modelToDto(u))
+                .collect(Collectors.toList());
     }
+
+
 
 }

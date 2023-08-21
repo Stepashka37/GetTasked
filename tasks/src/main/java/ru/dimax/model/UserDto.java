@@ -8,8 +8,12 @@ import lombok.Data;
 public class UserDto {
 
     private Integer id;
+
     private String name;
+
     private String email;
+
     private Spec spec;
+
     private Grade grade;
 }

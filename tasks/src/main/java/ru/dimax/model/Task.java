@@ -1,7 +1,6 @@
 package ru.dimax.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
@@ -13,6 +12,9 @@ import java.util.Objects;
 @Table(name = "tasks")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Task {
 
     @Id
@@ -31,8 +33,12 @@ public class Task {
     @Column(name = "deadline", nullable = false)
     private LocalDateTime deadline;
 
-    @OneToMany(mappedBy = "task")
-    private List<UserTask> userTasks;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User responsible;
+
+    @ManyToMany
+    private List<User> users;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
@@ -43,12 +49,12 @@ public class Task {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(start, task.start) && Objects.equals(deadline, task.deadline) && Objects.equals(userTasks, task.userTasks) && status == task.status;
+        return Objects.equals(id, task.id) && Objects.equals(name, task.name) && Objects.equals(description, task.description) && Objects.equals(start, task.start) && Objects.equals(deadline, task.deadline) && Objects.equals(users, task.users) && status == task.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, start, deadline, userTasks, status);
+        return Objects.hash(id, name, description, start, deadline, users, status);
     }
 }
 

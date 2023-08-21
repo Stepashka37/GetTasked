@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
 
-    @Query("SELECT t FROM Task t JOIN t.userTasks ut JOIN ut.user u WHERE u.id = :userId")
+    @Query("SELECT t FROM Task t join t.users u where u.id = :userId order by t.deadline asc")
     List<Task> findTasksByUserId(@Param("userId") Integer userId);
 
 }

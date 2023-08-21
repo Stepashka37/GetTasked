@@ -36,19 +36,19 @@ public class User {
     @Column(name = "grade")
     private Grade grade;
 
-    @OneToMany(mappedBy = "user")
-    private List<UserTask> userTasks;
+    @ManyToMany(mappedBy = "users")
+    private List<Task> tasks;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && spec == user.spec && grade == user.grade;
+        return Objects.equals(id, user.id) && Objects.equals(name, user.name) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && spec == user.spec && grade == user.grade && Objects.equals(tasks, user.tasks);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, password, spec, grade);
+        return Objects.hash(id, name, email, password, spec, grade, tasks);
     }
 }

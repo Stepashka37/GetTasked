@@ -1,12 +1,38 @@
 server:
   port: 8081
+
 spring:
+  profiles:
+    active: dev
+
+---
+
+spring:
+  profiles: dev
   application:
     name: tasks
   datasource:
     password: 123
     url: jdbc:postgresql://localhost:5432/tasks
     username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: postgres
+    password: 123
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create-drop
