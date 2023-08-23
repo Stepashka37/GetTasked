@@ -11,16 +11,17 @@ import javax.validation.constraints.NotNull;
 @Data
 public class UpdateUserRequest {
 
-    @NotNull
-    private Spec spec;
-
-    @NotNull
-    private Grade grade;
+    @NotBlank
+    private String name;
 
     @NotBlank
     @Email
     private String email;
 
-    @NotBlank
-    private String name;
+    @NotNull
+    private Grade grade;
+
+    @NotNull
+    private Spec spec;
+
 }

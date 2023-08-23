@@ -3,6 +3,7 @@ package ru.dimax.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.dimax.exceptions.ConditionViolationException;
 import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
 import ru.dimax.mapper.UserMapper;
@@ -39,9 +40,9 @@ public class UserService {
 
         UserUpdateMapper.INSTANCE.updateUserFromDto(request, user);
 
-        User userUPD = userRepository.save(user);
+        User userSaved = userRepository.save(user);
         log.info("User with id {} updated", user.getId());
-        return UserMapper.modelToDto(userUPD);
+        return UserMapper.modelToDto(userSaved);
     }
 
     public void deleteUser(Integer userId) {
@@ -63,6 +64,27 @@ public class UserService {
                 .map(u -> modelToDto(u))
                 .collect(Collectors.toList());
     }
+
+    public TaskDto assignUserToTask(Integer userId, Integer taskId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException(String.format("Task %d not found", taskId)));
+
+        if (task.getResponsible().getId().equals(userId)) {
+            throw new ConditionViolationException("This user is already marked as responsible");
+        }
+
+        task.setResponsible(user);
+
+        Task saved = taskRepository.saveAndFlush(task);
+
+        return modelToDto(saved);
+    }
+
+
+
 
 
 
