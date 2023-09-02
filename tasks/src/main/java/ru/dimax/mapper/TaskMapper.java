@@ -1,10 +1,7 @@
 package ru.dimax.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.dimax.model.NewTaskRequest;
-import ru.dimax.model.Status;
-import ru.dimax.model.Task;
-import ru.dimax.model.TaskDto;
+import ru.dimax.model.*;
 
 import static ru.dimax.mapper.UserMapper.*;
 import java.util.stream.Collectors;
@@ -39,6 +36,17 @@ public class TaskMapper {
                 .status(Status.PENDING)
                 .start(request.getStart())
                 .deadline(request.getDeadline())
+                .build();
+    }
+
+    public ShortTaskDto modelToShortDto(Task task) {
+        return ShortTaskDto.builder()
+                .id(task.getId())
+                .name(task.getName())
+                .description(task.getDescription())
+                .status(task.getStatus())
+                .start(task.getStart())
+                .deadline(task.getDeadline())
                 .build();
     }
 

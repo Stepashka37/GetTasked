@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 public class ErrorHandler {
     public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    @ExceptionHandler({UserNotFoundException.class, TaskNotFoundException.class})
+    @ExceptionHandler({UserNotFoundException.class, TaskNotFoundException.class, InvitationNotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFoundException(final RuntimeException exception) {
         log.error("404: " + exception.getMessage());
@@ -28,7 +28,7 @@ public class ErrorHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse condViolationExc(final RuntimeException exception) {
         log.error("400: " + exception.getMessage());
-        return new ErrorResponse(HttpStatus.NOT_FOUND.name(),
+        return new ErrorResponse(HttpStatus.BAD_REQUEST.name(),
                 "The condition has been violated",
                 exception.getMessage(),
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_TIME_PATTERN)));

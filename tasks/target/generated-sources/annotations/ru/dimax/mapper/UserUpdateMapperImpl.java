@@ -6,7 +6,7 @@ import ru.dimax.model.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-22T14:26:00+0300",
+    date = "2023-08-26T11:55:20+0300",
     comments = "version: 1.4.1.Final, compiler: javac, environment: Java 18.0.2 (Oracle Corporation)"
 )
 public class UserUpdateMapperImpl implements UserUpdateMapper {

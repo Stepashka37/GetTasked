@@ -30,7 +30,7 @@ public class UserService {
 
         User userSaved = userRepository.saveAndFlush(user);
 
-        log.info("User with id {} saved", user.getId());
+        log.info("User with id {} saved", userSaved.getId());
         return UserMapper.modelToDto(userSaved);
     }
 
@@ -43,6 +43,14 @@ public class UserService {
         User userSaved = userRepository.save(user);
         log.info("User with id {} updated", user.getId());
         return UserMapper.modelToDto(userSaved);
+    }
+
+    public FullUserDto getUser(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+
+        log.info("User with id {} retrieved", user.getId());
+        return modelToFullDto(user);
     }
 
     public void deleteUser(Integer userId) {
@@ -65,9 +73,9 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public TaskDto assignUserToTask(Integer userId, Integer taskId) {
+    public TaskDto setUserResponsible(Integer userId, Integer taskId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id %s does not exist", userId)));
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException(String.format("Task %d not found", taskId)));
@@ -76,8 +84,33 @@ public class UserService {
             throw new ConditionViolationException("This user is already marked as responsible");
         }
 
+        Integer userIdToDelete = task.getResponsible().getId();
         task.setResponsible(user);
+        //task.getUsers().removeIf(u -> u.getId().equals(userIdToDelete));
+        if(!task.getUsers().contains(user)) {
+            task.getUsers().add(user);
+        }
+        Task saved = taskRepository.saveAndFlush(task);
 
+        return modelToDto(saved);
+    }
+
+    public TaskDto assignUserToTask(Integer userId, Integer taskId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException(String.format("Task %d not found", taskId)));
+        if (task.getResponsible().getId().equals(userId) ||
+        task.getUsers().contains(user)) {
+            throw new ConditionViolationException("This user is already participating this task");
+        }
+
+        if(user.getTasks().size() > 3) {
+            throw new ConditionViolationException("This user already has 3 tasks to complete. He is very busy.");
+        }
+
+        task.getUsers().add(user);
         Task saved = taskRepository.saveAndFlush(task);
 
         return modelToDto(saved);
