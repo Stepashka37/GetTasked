@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.dimax.model.request.NewRequestDto;
 import ru.dimax.model.request.Request;
 import ru.dimax.model.request.RequestDto;
-import ru.dimax.model.task.NewTaskRequest;
 import ru.dimax.model.task.TaskDto;
 import ru.dimax.service.RequestService;
 
