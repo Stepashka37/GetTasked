@@ -7,8 +7,8 @@ import ru.dimax.exceptions.ConditionViolationException;
 import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
 import ru.dimax.mapper.TaskUpdateMapper;
-import ru.dimax.mapper.UserUpdateMapper;
-import ru.dimax.model.*;
+import ru.dimax.model.task.*;
+import ru.dimax.model.user.User;
 import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
 

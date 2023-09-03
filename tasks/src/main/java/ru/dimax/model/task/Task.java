@@ -1,7 +1,7 @@
-package ru.dimax.model;
+package ru.dimax.model.task;
 
 import lombok.*;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import ru.dimax.model.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

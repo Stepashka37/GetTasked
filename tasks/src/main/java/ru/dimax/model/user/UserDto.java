@@ -1,4 +1,4 @@
-package ru.dimax.model;
+package ru.dimax.model.user;
 
 import lombok.Builder;
 import lombok.Data;

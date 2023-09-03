@@ -1,5 +1,7 @@
 drop table if exists tasks;
 drop table if exists users;
+drop table if exists requests;
+drop table if exists invites;
 drop table if exists user_task;
 
 create table  tasks
@@ -37,4 +39,34 @@ create table user_task
         constraint fkj6lai3y87ttxldkysg1549etg
             references users,
     primary key (task_id, user_id)
+);
+
+create table requests
+(
+    id           serial
+        primary key,
+    comment      varchar(500),
+    requester_id integer
+        constraint fkeoax2t4j9i61p9lmon3009tr4
+            references users,
+    task_id      integer
+        constraint fkqri6ch0bqo3518odone7o7m30
+            references tasks
+);
+
+create table invites
+(
+    id         serial
+        primary key,
+    accepted   boolean,
+    comment    varchar(500),
+    invited_id integer
+        constraint fkoghy46jb8uwtm09codd7gad7d
+            references users,
+    inviter_id integer
+        constraint fk7g695j19v6a7911weymlf5dlj
+            references users,
+    task_id    integer
+        constraint fk84pdgxfoa9ivnuombqxq9ge3c
+            references tasks
 );

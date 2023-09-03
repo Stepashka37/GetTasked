@@ -1,6 +1,7 @@
-package ru.dimax.model;
+package ru.dimax.model.user;
 
 import lombok.*;
+import ru.dimax.model.task.Task;
 
 import javax.persistence.*;
 import java.util.List;

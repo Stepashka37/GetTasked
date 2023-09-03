@@ -1,4 +1,4 @@
-package ru.dimax.model;
+package ru.dimax.model.user;
 
 public enum Spec {
     FRONTEND,

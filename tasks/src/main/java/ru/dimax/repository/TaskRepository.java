@@ -4,7 +4,7 @@ package ru.dimax.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.dimax.model.Task;
+import ru.dimax.model.task.Task;
 
 import java.util.List;
 

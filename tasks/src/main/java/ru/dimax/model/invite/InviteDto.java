@@ -1,7 +1,9 @@
-package ru.dimax.model;
+package ru.dimax.model.invite;
 
 import lombok.Builder;
 import lombok.Data;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.user.UserDto;
 
 @Data
 @Builder

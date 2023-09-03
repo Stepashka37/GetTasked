@@ -7,7 +7,14 @@ import ru.dimax.exceptions.ConditionViolationException;
 import ru.dimax.exceptions.InvitationNotFoundException;
 import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
-import ru.dimax.model.*;
+import ru.dimax.model.invite.Invite;
+import ru.dimax.model.invite.InviteDto;
+import ru.dimax.model.invite.NewInviteDto;
+import ru.dimax.model.task.Status;
+import ru.dimax.model.task.Task;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.user.Grade;
+import ru.dimax.model.user.User;
 import ru.dimax.repository.InviteRepository;
 import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
@@ -29,7 +36,7 @@ public class InviteService {
         User user1 = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
 
-        User user2 = userRepository.findById(userId)
+        User user2 = userRepository.findById(secondUserId)
                 .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
 
         Task task = taskRepository.findById(taskId)

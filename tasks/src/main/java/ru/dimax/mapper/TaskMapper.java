@@ -1,9 +1,8 @@
 package ru.dimax.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.dimax.model.*;
+import ru.dimax.model.task.*;
 
-import static ru.dimax.mapper.UserMapper.*;
 import java.util.stream.Collectors;
 
 @UtilityClass

@@ -1,13 +1,16 @@
 package ru.dimax.mapper;
 
 import org.junit.jupiter.api.Test;
-import ru.dimax.model.*;
+import ru.dimax.model.task.Status;
+import ru.dimax.model.task.Task;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.user.Grade;
+import ru.dimax.model.user.Spec;
+import ru.dimax.model.user.User;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static ru.dimax.mapper.TaskMapper.*;
 
 class TaskMapperTest {

@@ -1,7 +1,8 @@
-package ru.dimax.model;
+package ru.dimax.model.user;
 
 import lombok.Builder;
 import lombok.Data;
+import ru.dimax.model.task.ShortTaskDto;
 
 import java.util.List;
 

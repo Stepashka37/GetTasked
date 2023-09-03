@@ -2,14 +2,17 @@ package ru.dimax.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.dimax.model.*;
-import ru.dimax.repository.UserRepository;
+import ru.dimax.model.invite.InviteDto;
+import ru.dimax.model.invite.NewInviteDto;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.user.FullUserDto;
+import ru.dimax.model.user.NewUserRequest;
+import ru.dimax.model.user.UpdateUserRequest;
+import ru.dimax.model.user.UserDto;
 import ru.dimax.service.InviteService;
 import ru.dimax.service.TaskService;
 import ru.dimax.service.UserService;
@@ -115,17 +118,31 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(completed);
     }
 
-    @PutMapping("/{userId}/tasks/{taskId}")
+    @PutMapping("/{userId}/tasks/assign/{taskId}")
     @Tag(name = "Admin Users", description = "Admin requests for users")
     @Operation(
             summary = "Assign user to task",
             description = "Endpoint assign user for current task"
     )
     public ResponseEntity<TaskDto> assignUserToTask(@PathVariable Integer userId, @PathVariable Integer taskId) {
-        TaskDto assignedTask = userService.assignUserToTask(userId, taskId);
+        TaskDto updatedTask = userService.assignUserToTask(userId, taskId);
 
-        return ResponseEntity.status(HttpStatus.OK).body(assignedTask);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
     }
+
+    @PutMapping("/{userId}/tasks/remove/{taskId}")
+    @Tag(name = "Admin Users", description = "Admin requests for users")
+    @Operation(
+            summary = "Remove user from task",
+            description = "Endpoint remove user from current task"
+    )
+    public ResponseEntity<TaskDto> removeUserFromTask(@PathVariable Integer userId, @PathVariable Integer taskId) {
+        TaskDto updatedTask = userService.removeUserFromTask(userId, taskId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
+    }
+
+
 
     @PostMapping("/{userId}/invites/{taskId}/send/{secondUserId}")
     @Tag(name = "User Users", description = "User requests for users")
@@ -155,6 +172,8 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(taskDto);
     }
+
+
 
 
 }

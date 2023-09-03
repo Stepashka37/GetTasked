@@ -1,10 +1,9 @@
 package ru.dimax.mapper;
 
 import org.junit.jupiter.api.Test;
-import ru.dimax.model.*;
+import ru.dimax.model.user.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest {
 

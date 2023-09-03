@@ -1,11 +1,9 @@
 package ru.dimax.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.dimax.model.Invite;
-import ru.dimax.model.InviteDto;
-import ru.dimax.model.NewInviteDto;
-import ru.dimax.mapper.UserMapper.*;
-import ru.dimax.mapper.TaskMapper.*;
+import ru.dimax.model.invite.Invite;
+import ru.dimax.model.invite.InviteDto;
+import ru.dimax.model.invite.NewInviteDto;
 
 
 @UtilityClass

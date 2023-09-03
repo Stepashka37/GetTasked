@@ -8,7 +8,9 @@ import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
 import ru.dimax.mapper.UserMapper;
 import ru.dimax.mapper.UserUpdateMapper;
-import ru.dimax.model.*;
+import ru.dimax.model.task.Task;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.user.*;
 import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
 
@@ -91,7 +93,7 @@ public class UserService {
             task.getUsers().add(user);
         }
         Task saved = taskRepository.saveAndFlush(task);
-
+        log.info("User {} is set as responsible for task {}", userId, taskId);
         return modelToDto(saved);
     }
 
@@ -112,6 +114,34 @@ public class UserService {
 
         task.getUsers().add(user);
         Task saved = taskRepository.saveAndFlush(task);
+        log.info("User {} is assigned to task {}", userId, taskId);
+
+        return modelToDto(saved);
+    }
+
+    public TaskDto removeUserFromTask(Integer userId, Integer taskId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(String.format("User with id '%s' does not exist", userId)));
+
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new TaskNotFoundException(String.format("Task %d not found", taskId)));
+
+        if (!task.getUsers().contains(user)) {
+            throw new UserNotFoundException(String.format("User with id %s is not assigned for task %s", userId, taskId));
+        }
+
+        if (task.getUsers().size() == 1) {
+            throw new ConditionViolationException(String.format("User %s is the only executor of the task. It can't be removed", userId));
+        }
+
+        if (task.getResponsible().getId() == userId) {
+            User newResponsible = task.getUsers().stream().filter(x -> x.getId() != userId).findFirst().get();
+            task.setResponsible(newResponsible);
+        }
+
+        task.getUsers().remove(user);
+        Task saved = taskRepository.saveAndFlush(task);
+        log.info("User {} is removed from task {}", userId, taskId);
 
         return modelToDto(saved);
     }

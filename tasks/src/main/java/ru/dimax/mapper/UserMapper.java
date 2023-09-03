@@ -1,10 +1,10 @@
 package ru.dimax.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.dimax.model.FullUserDto;
-import ru.dimax.model.NewUserRequest;
-import ru.dimax.model.User;
-import ru.dimax.model.UserDto;
+import ru.dimax.model.user.FullUserDto;
+import ru.dimax.model.user.NewUserRequest;
+import ru.dimax.model.user.User;
+import ru.dimax.model.user.UserDto;
 
 import java.util.stream.Collectors;
 import static ru.dimax.mapper.TaskMapper.*;
@@ -30,6 +30,17 @@ public class UserMapper {
                 .name(user.getName())
                 .grade(user.getGrade())
                 .spec(user.getSpec())
+                .build();
+    }
+
+    public User dtoToModel(UserDto dto) {
+        return User.builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .email(dto.getEmail())
+                .password(new String())
+                .grade(dto.getGrade())
+                .spec(dto.getSpec())
                 .build();
     }
 

@@ -2,8 +2,8 @@ package ru.dimax.mapper;
 
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
-import ru.dimax.model.UpdateUserRequest;
-import ru.dimax.model.User;
+import ru.dimax.model.user.UpdateUserRequest;
+import ru.dimax.model.user.User;
 
 @Mapper(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE, unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserUpdateMapper {

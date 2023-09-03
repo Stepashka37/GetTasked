@@ -7,7 +7,9 @@ import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.dimax.mapper.UserUpdateMapper;
-import ru.dimax.model.*;
+import ru.dimax.model.task.Status;
+import ru.dimax.model.task.Task;
+import ru.dimax.model.user.*;
 import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
 
@@ -17,9 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 import static ru.dimax.mapper.UserMapper.*;
 

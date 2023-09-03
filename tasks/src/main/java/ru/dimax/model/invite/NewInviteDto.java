@@ -1,4 +1,4 @@
-package ru.dimax.model;
+package ru.dimax.model.invite;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

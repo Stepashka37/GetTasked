@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.dimax.model.*;
+import ru.dimax.model.task.NewTaskRequest;
+import ru.dimax.model.task.TaskDto;
+import ru.dimax.model.task.UpdateTaskRequest;
 import ru.dimax.service.TaskService;
 import ru.dimax.service.UserService;
 
@@ -54,7 +56,7 @@ public class TaskController {
             description = "Endpoint switches task from status PENDING to either IN_PROGRESS or CANCELLED"
     )
     public ResponseEntity<TaskDto> approveTask(@RequestParam(value = "approve", defaultValue = "true") Boolean approve,
-                                                     @PathVariable("taskId") Integer taskId) {
+                                               @PathVariable("taskId") Integer taskId) {
         TaskDto taskDto = taskService.approveTask(approve, taskId);
         return ResponseEntity.status(HttpStatus.OK).body(taskDto);
     }

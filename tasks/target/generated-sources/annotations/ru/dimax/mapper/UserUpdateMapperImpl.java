@@ -1,12 +1,12 @@
 package ru.dimax.mapper;
 
 import javax.annotation.processing.Generated;
-import ru.dimax.model.UpdateUserRequest;
-import ru.dimax.model.User;
+import ru.dimax.model.user.UpdateUserRequest;
+import ru.dimax.model.user.User;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-08-26T11:55:20+0300",
+    date = "2023-09-02T18:02:12+0300",
     comments = "version: 1.4.1.Final, compiler: javac, environment: Java 18.0.2 (Oracle Corporation)"
 )
 public class UserUpdateMapperImpl implements UserUpdateMapper {
