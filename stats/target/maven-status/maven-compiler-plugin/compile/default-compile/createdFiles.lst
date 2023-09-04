@@ -1,0 +1,9 @@
+ru\stats\StatController.class
+ru\stats\StatMapper.class
+ru\stats\Stat$StatBuilder.class
+ru\stats\StatService.class
+ru\stats\StatDto.class
+ru\stats\StatRepository.class
+StatApplication.class
+ru\stats\StatDto$StatDtoBuilder.class
+ru\stats\Stat.class

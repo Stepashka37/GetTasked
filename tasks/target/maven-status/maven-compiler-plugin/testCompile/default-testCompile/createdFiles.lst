@@ -1,0 +1,6 @@
+ru\dimax\mapper\UserMapperTest.class
+ru\dimax\service\UserServiceTest.class
+ru\dimax\mapper\TaskMapperTest.class
+ru\dimax\repository\TaskRepositoryTest.class
+ru\dimax\repository\UserRepositoryTest.class
+ru\dimax\service\TaskServiceTest.class

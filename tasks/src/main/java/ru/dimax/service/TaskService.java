@@ -2,17 +2,23 @@ package ru.dimax.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import ru.dimax.exceptions.ConditionViolationException;
 import ru.dimax.exceptions.TaskNotFoundException;
 import ru.dimax.exceptions.UserNotFoundException;
 import ru.dimax.mapper.TaskUpdateMapper;
+import ru.dimax.model.stats.StatDto;
 import ru.dimax.model.task.*;
 import ru.dimax.model.user.User;
 import ru.dimax.repository.TaskRepository;
 import ru.dimax.repository.UserRepository;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +32,7 @@ public class TaskService {
 
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
+    private final WebClient webClient;
 
 
     public TaskDto createTask(Integer userId, NewTaskRequest request) {
@@ -114,6 +121,22 @@ public class TaskService {
         }
 
         task.setUsers(new ArrayList<>());
+
+        StatDto statDto = StatDto.builder()
+                .userId(user.getId())
+                .taskId(saved.getId())
+                .taskDescription(saved.getDescription())
+                .finishTime(LocalDateTime.now())
+                .build();
+
+        webClient.post()
+                .uri("http://localhost:8081/stats")
+                .body(Mono.just(statDto), StatDto.class)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<StatDto>() {})
+                .subscribe(response -> {
+                    // Handle the response here
+                });
 
         userRepository.saveAll(usersExecutingThisTask);
         log.info("Task with id {} completed", task.getId());
